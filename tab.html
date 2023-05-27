@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contoh Tabel</title>
+    <style>
+      table,
+      th,
+      td {
+        border-collapse: collapse;
+      }
+
+      th,
+      td {
+        padding: 8px;
+      }
+
+      th {
+        background-color: #4caf50;
+        color: white;
+      }
+
+      td {
+        background-color: #f2f2f2;
+      }
+
+      td.outline {
+        border: 1px solid black;
+      }
+    </style>
+  </head>
+  <body>
+    <form id="myForm" class="flex flex-col space-x-4 py-7 item-center">
+      <div class="grid grid-cols-2 gap-4 md:w-1/2">
+        <select
+          title="kamarBedah"
+          class="form-select border border-gray-300 px-4 py-2 rounded-lg w-full focus:outline-none focus:border-blue-500"
+          id="kamarBedah"
+        >
+          <option value="">Pilih Kamar Bedah</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+        </select>
+        <select
+          title="Jaminan"
+          class="form-select border border-gray-300 px-4 py-2 rounded-lg w-full focus:outline-none focus:border-blue-500"
+          id="jaminan"
+        >
+          <option value="">Pilih Jaminan</option>
+          <option value="JKN">JKN</option>
+          <option value="Asr">Asr</option>
+          <option value="Umum">Umum</option>
+        </select>
+        <select
+          title="Anes"
+          class="form-select border border-gray-300 px-4 py-2 rounded-lg w-full focus:outline-none focus:border-blue-500"
+          id="anes"
+        >
+          <option value="">Pilih Anes</option>
+          <option value="LMA">LMA</option>
+          <option value="GA">GA</option>
+          <option value="LOKAL">LOKAL</option>
+        </select>
+        <input
+          type="time"
+          class="form-input border border-gray-300 px-4 py-2 rounded-lg w-full focus:outline-none focus:order-blue-500"
+          placeholder="Waktu"
+          id="waktu"
+        />
+        <input
+          type="text"
+          class="form-input border border-gray-300 px-4 py-2 rounded-lg w-full focus:outline-none focus:order-blue-500"
+          placeholder="Tindakan Operasi"
+          id="tindakanOperasi"
+        />
+        <input
+          type="text"
+          class="form-input border border-gray-300 px-4 py-2 rounded-lg w-full focus:outline-none focus:order-blue-500"
+          placeholder="Operator"
+          id="operator"
+        />
+        <input
+          type="text"
+          class="form-input border border-gray-300 px-4 py-2 rounded-lg w-full focus:outline-none focus:order-blue-500"
+          placeholder="Perawat"
+          id="perawat"
+        />
+        <input
+          type="text"
+          class="

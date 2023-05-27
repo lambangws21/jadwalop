@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contoh Tabel Kosong dengan Form Input, Pengurutan, dan Cetak</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+     <style>
+      table {
+        border-collapse: collapse;
+        width: 100%;
+      }
+
+      th, td {
+        border: 1px solid black;
+        padding: 8px;
+        text-align: left;
+      }
+
+      th {
+        background-color: #f2f2f2;
+      }
+
+      tr:nth-child(even) {
+        background-color: #f9f9f9;
+      }
+
+      tr:hover {
+        background-color: #e9e9e9;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container mx-auto p-8">
+      <h2 class="text-2xl font-bold mb-4">Tabel Kamar Bedah</h2>
+      <form id="myForm" class="flex flex-col space-x-4 py-7 item-center">
+        <div class="grid grid-cols-2 gap-4 md:w-1/2">
+          <select
+            title="kamarBedah"
+            class="form-select border border-gray-300 px-4 py-2 rounded-lg w-full focus:outline-none focus:border-blue-500"
+            id="kamarBedah"
+          >
+            <option value="">Pilih Kamar Bedah</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+          </select>
+          <select
+            title="Jaminan"
+            class="form-select border border-gray-300 px-4 py-2 rounded-lg w-full focus:outline-none focus:border-blue-500"
+            id="jaminan"
+          >
+            <option value="">Pilih Jaminan</option>
+            <option value="JKN">JKN</option>
+            <option value="Asr">Asr</option>
+            <option value="Umum">Umum</option>
+          </select>
+          <select
+            title="Anes"
+            class="form-select border border-gray-300 px-4 py-2 rounded-lg w-full focus:outline-none focus:border-blue-500"
+            id="anes"
+          >
+            <option value="">Pilih Anes</option>
+            <option value="LMA">LMA</option>
+            <option value="GA">GA</option>
+            <option value="LOKAL">LOKAL</option>
+          </select>
+          <input
+            type="time"
+            class="form-input border border-gray-300 px-4 py-2 rounded-lg w-full focus:outline-none focus:order-blue-500"
+            placeholder="Waktu"
+            id="waktu"
+          />
+          <input
+            type="text"
+            class="form-input border border-gray-300 px-4 py-2 rounded-lg w-full focus:outline-none focus:order-blue-500"
+            placeholder="Tindakan Operasi"
+            id="tindakanOperasi"
+          />
+          <input
+            type="text"
+            class="form-input border border-gray-300 px-4 py-2 rounded-lg w-full focus:outline-none focus:order-blue-500"
+            placeholder="Operator"
+            id="operator"
+          />
+          <input
+            type="text"
+            class="form-input border border-gray-300 px-4 py-2 rounded-lg w-full focus:outline-none focus:order-blue-500"
+            placeholder="Perawat"
+            id="perawat"
+          />
+          <input
+            type="text"
+            class="form-input border border-gray-300 px-4 py-2 rounded-lg w-full focus:outline-none focus:order-blue-500"
+            placeholder="Keterangan"
+            id="keterangan"
+          />
+          <button
+            type="button"
+            class="btn mt-4 bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600"
+            onclick="tambahkanData()"
+          >
+            Tambahkan
+          </button>
+        </div>
+      </form>
+
+      <table class="table w-full" id="myTable">
+        <thead>
+          <tr>
+            <th class="px-1 bg-indigo-400 py-1">Kamar</th>
+            <th class="px-1 bg-teal-500 py-1">Jaminan</th>
+            <th class="px-1 bg-lime-200 py-1">Anes</th>
+            <th class="px-1 bg-orange-100 py-1">Waktu</th>
+            <th class="px-16 bg-green-400 py-1">Tindakan Operasi</th>
+            <th class="px-1 bg-red-100 py-1">Operator</th>
+            <th class="px-1 bg-slate-200 py-1">Perawat</th>
+            <th class="px-5 bg-purple-200 py-1">Keterangan</th>
+          </tr>
+        </thead>
+        <tbody id="tabelBody" class="border-solid border-2 border-sky-500">
+          <!-- Baris data akan ditambahkan secara dinamis saat formulir disubmit -->
+        </tbody>
+      </table>
+      <div class="flex space-x-4 mt-4">
+        <button
+          type="button"
+          class="btn bg-green-300 hover:bg-green-600 hover:text-slate-100 border rounded-md py-1 px-4 text-slate-900 shadow-sm font-semibold"
+          onclick="cetakTabel()"
+        >
+          Cetak
+        </button>
+        <button
+          type="button"
+          class="btn bg-green-300 hover:bg-green-600 hover:text-slate-100 border rounded-md py-1 px-4 text-slate-900 shadow-sm font-semibold"
+          onclick="urutkanTabel()"
+        >
+          Urutkan
+        </button>
+      </div>
+    </div>
+
+    <script>
+      /**
+       * Adds a new row to the table with data from the input fields.
+       * Clears the input fields after adding the row.
+       */
+      function tambahkanData() {
+        // Get input field values
+        var kamarBedahValue = document.getElementById("kamarBedah").value;
+        var jaminanValue = document.getElementById("jaminan").value;
+        var anesValue = document.getElementById("anes").value;
+        var waktuValue = document.getElementById("waktu").value;
+        var tindakanOperasiValue = document.getElementById("tindakanOperasi").value;
+        var operatorValue = document.getElementById("operator").value;
+        var perawatValue = document.getElementById("perawat").value;
+        var keteranganValue = document.getElementById("keterangan").value;
+
+        // Get table and insert new row
+        var tabel = document.getElementById("myTable");
+        var newRow = tabel.insertRow();
+        
+
+        // Set the outline for the new row
+        newRow.style.outline = "1px solid black";
+        newRow.style.borderLeft = "1px solid red";
+        newRow.style.borderRight = "1px solid green";
+        newRow.style.borderTop = "1px solid blue";
+        newRow.style.borderBottom = "1px solid yellow";
+
+        // Insert new cells and add input field values to the cells
+        var kamarBedahCell = newRow.insertCell();
+        var jaminanCell = newRow.insertCell();
+        var anesCell = newRow.insertCell();
+        var waktuCell = newRow.insertCell();
+        var tindakanOperasiCell = newRow.insertCell();
+        var operatorCell = newRow.insertCell();
+        var perawatCell = newRow.insertCell();
+        var keteranganCell = newRow.insertCell();
+
+        kamarBedahCell.innerHTML = kamarBedahValue;
+        jaminanCell.innerHTML = jaminanValue;
+        anesCell.innerHTML = anesValue;
+        waktuCell.innerHTML = waktuValue;
+        tindakanOperasiCell.innerHTML = tindakanOperasiValue;
+        operatorCell.innerHTML = operatorValue;
+        perawatCell.innerHTML = perawatValue;
+        keteranganCell.innerHTML = keteranganValue;
+
+        // Clear input fields after adding row
+        document.getElementById("kamarBedah").value = "";
+        document.getElementById("jaminan").value = "";
+        document.getElementById("anes").value = "";
+        document.getElementById("waktu").value = "";
+        document.getElementById("tindakanOperasi").value = "";
+        document.getElementById("operator").value = "";
+        document.getElementById("perawat").value = "";
+        document.getElementById("keterangan").value = "";
+      }
+      // Sort the table based on the "Kamar Bedah" column (index starts from 0)
+      /**
+       * Sorts the table based on the "Kamar Bedah" column (index starts from 0).
+       * @return {void}
+       */
+      function urutkanTabel() {
+        var tabel = document.getElementById("myTable");
+        var rows, switching, i, x, y, shouldSwitch;
+        var columnIndex = 0; // Kolom "Kamar Bedah" (indeks dimulai dari 0)
+
+        switching = true;
+
+        while (switching) {
+          switching = false;
+          rows = tabel.rows;
+
+          for (i = 1; i < rows.length - 1; i++) {
+            shouldSwitch = false;
+            x = parseInt(rows[i].cells[columnIndex].innerHTML);
+            y = parseInt(rows[i + 1].cells[columnIndex].innerHTML);
+
+            if (x > y) {
+              shouldSwitch = true;
+              break;
+            }
+          }
+
+          if (shouldSwitch) {
+            rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+            switching = true;
+          }
+        }
+      }
+      /**
+       * This function prints the HTML table with id "myTable" in a new window and prints it.
+       */
+      function cetakTabel() {
+        // Get the HTML table with id "myTable"
+        var tabel = document.getElementById("myTable").outerHTML;
+
+        // Open a new window
+        var win = window.open("", "_blank");
+
+        // Write the HTML code for the new window
+        win.document.write("<html><head><title>Tabel Kamar Bedah</title></head><body>");
+        win.document.write("<h2>Tabel Kamar Bedah</h2>");
+        win.document.write(tabel);
+        win.document.write("</body></html>");
+
+        // Close the document
+        win.document.close();
+
+        // Print the new window
+        win.print();
+      }
+      // Menambahkan border kanan pada setiap sel dalam tabel dengan id "myTable".
+      function tambahkanPembatas() {
+        var tabel = document.getElementById("myTable");
+        var rows = tabel.rows;
+
+        for (var i = 0; i < rows.length; i++) {
+          var cells = rows[i].cells;
+          for (var j = 0; j < cells.length; j++) {
+            cells[j].style.borderRight = "1px solid black";
+            cells[j].style.borderTop = "1px solid black";
+            cells[j].style.borderBottom = "1px solid black";
+            cells[j].style.borderLeft = "1px solid black";
+          }
+        }
+      }
+
+      window.addEventListener("DOMContentLoaded", tambahkanPembatas);
+    </script>
+  </body>
+</html>
